@@ -21,8 +21,8 @@ The process can be optimized by pre-generating a pool of random root numbers.
 ```
 
 -Since the information is always the same, one can generate a stream of random noise that can be decoded.
+
 -Noise can be added to multimedia in lossy streams and retried by accounting for threshold values.
+
 -One could also implement a network socket with this encoding.
      -In my implementation, Infinity.RDRS (RDR-Stream) will maintain a realtime stream for communication.
-     
-
