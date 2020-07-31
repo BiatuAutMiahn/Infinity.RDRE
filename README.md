@@ -24,7 +24,7 @@ The process can be optimized by pre-generating a pool of random root numbers.
 2. Noise can be added to multimedia in lossy streams and retried by accounting for threshold values.
 3. One could also implement a network socket with this encoding.
 3a. In my implementation, Infinity.RDRS (RDR-Stream) will maintain a realtime stream for communication.
-4. By using custom random root maps, and using the full index space you can make a hard to decode message.
+4. By using custom random root maps, using the full index space, changing the length of random numbers/indicies, one can create hard to decode messages.
 
 Here is an example of an RRM (RandomRootMap):
 ```
