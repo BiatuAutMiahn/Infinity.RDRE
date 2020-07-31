@@ -1,4 +1,4 @@
-# RDRE
+# Infinity.RDRE
 Random Digital Root Encoding
 
 RDRE allows information to be encoded with random numbers.
@@ -19,3 +19,10 @@ The process can be optimized by pre-generating a pool of random root numbers.
 8: [8576, 4940, 7739, 4067, 7829, 7676, 8243, 7469, 4940, 8936, 7910, 4742, 4130, 2123, 9647, 8081, 7199, 8594, 3032, 9548]
 9: [5373, 2673, 6723, 8712, 3366, 6831, 2169, 8496, 3699, 3402, 5742, 8793, 6624, 3042, 1143, 6138, 2034, 7893, 4320, 9468]
 ```
+
+-Since the information is always the same, one can generate a stream of random noise that can be decoded.
+-Noise can be added to multimedia in lossy streams and retried by accounting for threshold values.
+-One could also implement a network socket with this encoding.
+     -In my implementation, Infinity.RDRS (RDR-Stream) will maintain a realtime stream for communication.
+     
+
