@@ -1,4 +1,16 @@
-﻿using System.Windows.Forms;
+﻿using System.Drawing.Drawing2D;
+using System.Windows.Forms;
+
+public class PictureBoxWithInterpolationMode : PictureBox
+{
+    public InterpolationMode InterpolationMode { get; set; }
+
+    protected override void OnPaint(PaintEventArgs paintEventArgs)
+    {
+        paintEventArgs.Graphics.InterpolationMode = InterpolationMode;
+        base.OnPaint(paintEventArgs);
+    }
+}
 
 namespace RDRE.GUI {
     partial class Main {
@@ -55,7 +67,7 @@ namespace RDRE.GUI {
             this.OptAutoDepth = new System.Windows.Forms.CheckBox();
             this.toolTips = new System.Windows.Forms.ToolTip(this.components);
             this.StatsGroup = new System.Windows.Forms.GroupBox();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.pictureBox1 = new PictureBoxWithInterpolationMode();
             this.Output = new System.Windows.Forms.RichTextBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.button3 = new System.Windows.Forms.Button();
@@ -421,6 +433,7 @@ namespace RDRE.GUI {
             // 
             // pictureBox1
             // 
+            this.pictureBox1.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.HighQualityBicubic;
             this.pictureBox1.Location = new System.Drawing.Point(8, 16);
             this.pictureBox1.Name = "pictureBox1";
             this.pictureBox1.Size = new System.Drawing.Size(200, 200);
@@ -598,7 +611,7 @@ namespace RDRE.GUI {
         private CheckBox OptRealtime;
         private CheckBox OptClearOnRet;
         private GroupBox StatsGroup;
-        private PictureBox pictureBox1;
+        private PictureBoxWithInterpolationMode pictureBox1;
     }
 }
 

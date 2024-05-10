@@ -155,7 +155,8 @@ namespace RDRE.GUI {
                 
                 //pictureBox1.SizeMode = PictureBoxSizeMode.CenterImage;
                 //pictureBox1.SizeMode = PictureBoxSizeMode.StretchImage;
-                pictureBox1.Image = qrCode.GetGraphic(2, Color.Black, Color.White, true);
+                
+                pictureBox1.Image = qrCode.GetGraphic(8, Color.Black, Color.White, true);
                 //pictureBox1.Size = new System.Drawing.Size(pictureBox1.Width, pictureBox1.Height);
 
                 //stopWatch.Stop();
@@ -183,9 +184,8 @@ namespace RDRE.GUI {
             else if (Text.Length == 0) {
                 Output.Text = "";
                 Output.Text = Output.Text;
-                // ictureBox1.BackgroundImage.Dispose();
-                //pictureBox1.BackgroundImage = null;
-                //pictureBox1.Update();
+                pictureBox1.Image = null;
+                pictureBox1.Update();
             }
             
         }
