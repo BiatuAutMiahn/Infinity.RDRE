@@ -16,13 +16,18 @@ using System.IO;
 using System.Security.Cryptography;
 using System.IO.Compression;
 using System.Reflection;
-using zuki.io.compression;
+using QRCoder;
+using System.Drawing.Drawing2D;
 
 namespace RDRE.GUI {
     public partial class Main : Form {
         [DllImport("user32.dll", CharSet = CharSet.Auto)]
         private static extern Int32 SendMessage(IntPtr hWnd, int msg, int wParam, [MarshalAs(UnmanagedType.LPWStr)]string lParam);
         private const int EM_SETCUEBANNER = 0x1501;
+        QRCodeGenerator qrGenerator;
+        QRCodeGenerator.ECCLevel eccLevel;
+        QRCodeData qrCodeData;
+        QRCode qrCode;
         bool AutoDepth;
         int OutputMode;
         bool Spacing;
@@ -48,8 +53,11 @@ namespace RDRE.GUI {
         bool ClearOnRetLast;
         //public double ProgressRDR;
         public Main() {
+            eccLevel = (QRCodeGenerator.ECCLevel)1;
+            qrGenerator = new QRCodeGenerator();
             InitializeComponent();
             RDRE.Init();
+            UpdateStates();
         }
         protected override CreateParams CreateParams {
             get {
@@ -62,17 +70,18 @@ namespace RDRE.GUI {
         }
         private void UpdateOutput() {
             string Text = Input.Text.ToString();
-            PerfInputLen.Text = Text.Length.ToString();
+
+            /*PerfInputLen.Text = Text.Length.ToString();*/
             //byte[] TextByte;
             if (Text.Length > 0) {
-                Progress.Value = 0;
+/*                Progress.Value = 0;
                 stopWatch = Stopwatch.StartNew();
                 if (ProgressThread.IsAlive) {
                     ProgressThread.Resume();
                 } else {
                     ProgressThread.Start();
                 }
-                if (!ModeRDR) {
+*/                if (!ModeRDR) {
                     Text = Text.Replace("\r", "\n");
                     /*if (EncLZMA) {
                         Text = Encoding.ASCII.GetString(CompressLZMA(Encoding.ASCII.GetBytes(Text)));
@@ -140,34 +149,45 @@ namespace RDRE.GUI {
                     }*/
 
                     Output.Text = Text;
-                    
                 }
+                qrCodeData = qrGenerator.CreateQrCode(Text, eccLevel);
+                qrCode = new QRCode(qrCodeData);
+                
+                //pictureBox1.SizeMode = PictureBoxSizeMode.CenterImage;
+                //pictureBox1.SizeMode = PictureBoxSizeMode.StretchImage;
+                pictureBox1.Image = qrCode.GetGraphic(2, Color.Black, Color.White, true);
+                //pictureBox1.Size = new System.Drawing.Size(pictureBox1.Width, pictureBox1.Height);
 
                 //stopWatch.Stop();
                 //Output.Text = Output.Text;
-                TotalTime = stopWatch.Elapsed.TotalMilliseconds;
+                //TotalTime = stopWatch.Elapsed.TotalMilliseconds;
                 //TotalTimeAvg += TotalTime;
                 //TotalTimeCount++;
-                PerfTotalTime.Text = Tools.DisplayTime(Convert.ToDecimal(TotalTime * 1000 * 1000));//.ToString()+"ms";
+                //PerfTotalTime.Text = Tools.DisplayTime(Convert.ToDecimal(TotalTime * 1000 * 1000));//.ToString()+"ms";
                 //PerfCharRate.Text = Tools.DisplayHertz(Convert.ToDecimal(((1 / RDRE.CharTime) * 1000)));
                 //PerfTotalTimeAvg.Text = Tools.DisplayTime(Convert.ToDecimal((TotalTimeAvg / TotalTimeCount) * 1000 * 1000));
                 //PerfCharRateAvg.Text = Tools.DisplayHertz(Convert.ToDecimal(((1 / (RDRE.CharTimeAvg / RDRE.CharTimeCount)) * 1000)));
                 //Progress.Value = (int)RDRE.CurrentProgress;
                 //Progress.Increment(100);
-                if (OutputMode == 0) {
-                    PerfOutputLen.Text = Output.Text.Length.ToString("D");
-                } else if (OutputMode == 1) {
-                    PerfOutputLen.Text = (Output.Text.Length / 2).ToString("D");
-                }
-                if (ProgressThread.IsAlive) {
-                    ProgressThread.Suspend();
-                    //ProgressThread.Abort();
-                }
-                Progress.Value = 1000;
-            } else if (Text.Length == 0) {
+                /*                if (OutputMode == 0) {
+                                    PerfOutputLen.Text = Output.Text.Length.ToString("D");
+                                } else if (OutputMode == 1) {
+                                    PerfOutputLen.Text = (Output.Text.Length / 2).ToString("D");
+                                }*/
+                //if (ProgressThread.IsAlive) {
+                //    ProgressThread.Suspend();
+                //ProgressThread.Abort();
+                //}
+                //Progress.Value = 1000;
+            }
+            else if (Text.Length == 0) {
                 Output.Text = "";
                 Output.Text = Output.Text;
+                // ictureBox1.BackgroundImage.Dispose();
+                //pictureBox1.BackgroundImage = null;
+                //pictureBox1.Update();
             }
+            
         }
 
         private void Input_TextChanged(object sender, EventArgs e) {
@@ -197,8 +217,8 @@ namespace RDRE.GUI {
             AutoDepth = true;
             OutputMode = 1;
             Spacing = false;
-            Insane = false;
-            InsaneDelay = 20;
+            Insane = true;
+            InsaneDelay = 125;
             /*PerfInputLen.Text = "0 Bytes";
             PerfOutputLen.Text = "0 Bytes";
             PerfCharRate.Text = "0.0000ms";
@@ -206,9 +226,9 @@ namespace RDRE.GUI {
             InsaneThread = new Thread(InsaneUpdate);
             InsaneThread.IsBackground = true;
             InsaneDelayTicker.Enabled = false;
-            InsaneDelayTicker.Value = 20;
-            ProgressThread = new Thread(ProgressUpdate);
-            ProgressThread.IsBackground = true;
+            InsaneDelayTicker.Value = 125;
+            //ProgressThread = new Thread(ProgressUpdate);
+            //ProgressThread.IsBackground = true;
             Secure = false;
             SecEncMode = false;
             OptSecEnc.Enabled = false;
@@ -221,8 +241,8 @@ namespace RDRE.GUI {
             Realtime = true;
             ShiftRet = false;
             ClearOnRet = false;
-            OptOutLZMA.Enabled = false;
-            OptOutLZMA.Checked = false;
+            //OptOutLZMA.Enabled = false;
+            //OptOutLZMA.Checked = false;
             Input.KeyDown += new KeyEventHandler(Input_KeyDown);
         }
 
@@ -243,7 +263,7 @@ namespace RDRE.GUI {
             }
         }
 
-        public void ProgressUpdate() {
+/*        public void ProgressUpdate() {
             try {
                 while (true) {
                     Thread.Sleep(10);
@@ -256,7 +276,7 @@ namespace RDRE.GUI {
                 Console.WriteLine("newThread cannot go to sleep - " +
                     "interrupted by main thread.");
             }
-        }
+        }*/
 
         private void Input_KeyDown(object sender, KeyEventArgs e) {
             if (e.KeyCode == Keys.Enter) {
@@ -368,41 +388,55 @@ namespace RDRE.GUI {
 
         private void OptSecEncDec_CheckChanged(object sender, EventArgs e) {
         }
-
-        private void ModeRDR_CheckedChanged(object sender, EventArgs e) {
-            if (ModeEncRDR.Checked) {
-                if (Secure) {
-                    if (OptSecKey.Text.Length > 0) {
+           
+        private void UpdateStates()
+        {
+            if (ModeEncRDR.Checked)
+            {
+                if (Secure)
+                {
+                    if (OptSecKey.Text.Length > 0)
+                    {
                         OptSecEnc.Enabled = true;
                     }
                 }
                 OptOutputDec.Enabled = true;
                 OptOutputHex.Enabled = true;
-                if (OutputMode > 0) {
+                if (OutputMode > 0)
+                {
                     OptSpacing.Enabled = true;
                     OptSpacing.Checked = LastSpacing;
                 }
                 OptAutoDepth.Enabled = true;
-                if (AutoDepth) {
+                if (AutoDepth)
+                {
                     OptAutoDepth.Checked = true;
                     OptDepthSelect.Enabled = false;
-                } else {
+                }
+                else
+                {
                     OptAutoDepth.Checked = false;
                     OptDepthSelect.Enabled = true;
                 }
                 OptInsane.Enabled = true;
-                if (Insane) {
+                if (Insane)
+                {
                     OptInsane.Checked = true;
                     InsaneDelayTicker.Enabled = true;
-                } else {
+                }
+                else
+                {
                     OptInsane.Checked = false;
                     InsaneDelayTicker.Enabled = false;
                 }
                 OptRealtime.Enabled = true;
-                if (RealtimeLast) {
+                if (RealtimeLast)
+                {
                     OptClearOnRet.Enabled = true;
                     OptRealtime.Checked = true;
-                } else {
+                }
+                else
+                {
                     OptClearOnRet.Enabled = false;
                 }
                 //                OptRealtime.Checked = RealtimeLast;
@@ -410,15 +444,19 @@ namespace RDRE.GUI {
                 SecEncMode = false;
                 OptSecEnc.Checked = true;
                 ModeRDR = false;
-            } else if (ModeDecRDR.Checked) {
-                if (Secure) {
+            }
+            else if (ModeDecRDR.Checked)
+            {
+                if (Secure)
+                {
                     OptSecEnc.Enabled = false;
                 }
                 SecEncMode = true;
                 OptSecDec.Checked = true;
                 OptDepthSelect.Enabled = false;
                 OptAutoDepth.Enabled = false;
-                if (OptRealtime.Checked) {
+                if (OptRealtime.Checked)
+                {
                     RealtimeLast = OptRealtime.Checked;
                     ClearOnRetLast = OptClearOnRet.Checked;
                 }
@@ -433,6 +471,9 @@ namespace RDRE.GUI {
                 OptSpacing.Enabled = false;
                 ModeRDR = true;
             }
+        }
+        private void ModeRDR_CheckedChanged(object sender, EventArgs e) {
+            UpdateStates();
             UpdateOutput();
         }
 
@@ -534,14 +575,14 @@ namespace RDRE.GUI {
             }
         }
 
-        private void OutLZMA_CheckedChanged(object sender, EventArgs e) {
+/*        private void OutLZMA_CheckedChanged(object sender, EventArgs e) {
             if (OptOutLZMA.Checked) {
                 EncLZMA = true;
             } else if (!OptOutLZMA.Checked) {
                 EncLZMA = false;
             }
             UpdateOutput();
-        }
+        }*/
 
         private void OutBase64_CheckedChanged(object sender, EventArgs e) {
             if (OptOutBase64.Checked) {
@@ -567,7 +608,7 @@ namespace RDRE.GUI {
                 }
                 EncBase64 = false;
                 //OptOutLZMA.Enabled = false;
-                OptOutLZMA.Checked = false;
+                //OptOutLZMA.Checked = false;
             }
             UpdateOutput();
         }
@@ -599,7 +640,7 @@ namespace RDRE.GUI {
             var base64EncodedBytes = System.Convert.FromBase64String(base64EncodedData);
             return System.Text.Encoding.ASCII.GetString(base64EncodedBytes);
         }
-        public static byte[] CompressLZMA(byte[] Data) {
+/*        public static byte[] CompressLZMA(byte[] Data) {
             LzmaEncoder EncoderLZMA = new LzmaEncoder(); ;
             MemoryStream OutputBuff = new MemoryStream();
             EncoderLZMA.WriteEndMark = false;
@@ -615,7 +656,7 @@ namespace RDRE.GUI {
             LzmaReader DecoderLZMA = new LzmaReader(InputBuff);
             DecoderLZMA.CopyTo(OutputBuff);
             return OutputBuff.ToArray();
-        }
+        }*/
         public static string ByteArrayToString(byte[] ba) {
             StringBuilder hex = new StringBuilder(ba.Length * 2);
             foreach (byte b in ba)

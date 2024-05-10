@@ -22,7 +22,7 @@ namespace RDRE.GUI {
         }
     }
     public static class Tools {
-        public static string DisplayHertz(decimal hz) {
+/*        public static string DisplayHertz(decimal hz) {
             const int scale = 1000;
             string[] orders = new string[] { "gHz", "mHz", "kHz", "Hz" };
             long max = (long)Math.Pow(scale, orders.Length - 1);
@@ -43,7 +43,7 @@ namespace RDRE.GUI {
             }
             return "0 ns";
         }
-    }
+*/    }
     public static class RDRE {
         public static double CharTime = 0;
         public static double CharTimeAvg = 0;
@@ -102,7 +102,7 @@ namespace RDRE.GUI {
                 while (true) {
                     Done = true;
                     Rand = RandomInt.Next(0x1, 0xFFFF);
-                    Root = GetRoot(Rand) - 1;
+                    Root = GetRoot2(Rand) - 1;
                     if (Pool[Root, 0] < Depth) {
                         for (int i = 1; i <= Depth; i++) {
                             if (Pool[Root, i] == 0) {
@@ -130,16 +130,26 @@ namespace RDRE.GUI {
                 }
             }
 
-            public static int GetRoot(int i) {
+            public static int GetRoot(int i)
+            {
                 int j;
-                do {
+                do
+                {
                     j = 0;
-                    do {
+                    do
+                    {
                         j += i % 10;
                         i /= 10;
                     } while (i > 0.9);
                     i = j;
                 } while (j >= 10);
+                return j;
+            }
+            public static int GetRoot2(int i)
+            {
+                int j;
+                j = i % 9;
+                if (j == 0) return 9;
                 return j;
             }
 
@@ -297,7 +307,7 @@ namespace RDRE.GUI {
                     Output += "0 ";
                 }
                 Pos++;
-                CurrentProgress = ((double)Pos / Input.Length) * 1000;
+                //CurrentProgress = ((double)Pos / Input.Length) * 1000;
                 //Debug.WriteLine((Input.Length));
                 //Debug.WriteLine((Pos));
                 //Debug.WriteLine(((double)Pos /Input.Length)*1000);

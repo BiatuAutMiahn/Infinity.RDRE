@@ -28,22 +28,13 @@ namespace RDRE.GUI {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Main));
             this.OutputLabel = new System.Windows.Forms.Label();
-            this.PerfLabel3 = new System.Windows.Forms.Label();
-            this.PerfLabel1 = new System.Windows.Forms.Label();
-            this.PerfLebel0 = new System.Windows.Forms.Label();
             this.InputLabel = new System.Windows.Forms.Label();
             this.OutputModeLabel = new System.Windows.Forms.Label();
             this.RandDepthLabel = new System.Windows.Forms.Label();
-            this.StatsGroup = new System.Windows.Forms.GroupBox();
-            this.Progress = new System.Windows.Forms.ProgressBar();
-            this.PerfInputLen = new System.Windows.Forms.Label();
-            this.PerfTotalTime = new System.Windows.Forms.Label();
-            this.PerfOutputLen = new System.Windows.Forms.Label();
             this.Input = new System.Windows.Forms.TextBox();
             this.SettingsGroup = new System.Windows.Forms.GroupBox();
             this.OptClearOnRet = new System.Windows.Forms.CheckBox();
             this.OptOutBase64 = new System.Windows.Forms.CheckBox();
-            this.OptOutLZMA = new System.Windows.Forms.CheckBox();
             this.ModeDecRDR = new System.Windows.Forms.RadioButton();
             this.ModeEncRDR = new System.Windows.Forms.RadioButton();
             this.label2 = new System.Windows.Forms.Label();
@@ -63,6 +54,8 @@ namespace RDRE.GUI {
             this.OptDepthSelect = new System.Windows.Forms.ComboBox();
             this.OptAutoDepth = new System.Windows.Forms.CheckBox();
             this.toolTips = new System.Windows.Forms.ToolTip(this.components);
+            this.StatsGroup = new System.Windows.Forms.GroupBox();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.Output = new System.Windows.Forms.RichTextBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.button3 = new System.Windows.Forms.Button();
@@ -72,11 +65,12 @@ namespace RDRE.GUI {
             this.DlgCharMap = new System.Windows.Forms.Button();
             this.ClearAll = new System.Windows.Forms.Button();
             this.CpyOutIn = new System.Windows.Forms.Button();
-            this.StatsGroup.SuspendLayout();
             this.SettingsGroup.SuspendLayout();
             this.panel2.SuspendLayout();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.InsaneDelayTicker)).BeginInit();
+            this.StatsGroup.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -89,40 +83,6 @@ namespace RDRE.GUI {
             this.OutputLabel.TabIndex = 23;
             this.OutputLabel.Text = "Output:";
             this.toolTips.SetToolTip(this.OutputLabel, "Displays Encoded/Decoded Output");
-            // 
-            // PerfLabel3
-            // 
-            this.PerfLabel3.AccessibleRole = System.Windows.Forms.AccessibleRole.None;
-            this.PerfLabel3.AutoSize = true;
-            this.PerfLabel3.Location = new System.Drawing.Point(14, 41);
-            this.PerfLabel3.Name = "PerfLabel3";
-            this.PerfLabel3.Size = new System.Drawing.Size(84, 14);
-            this.PerfLabel3.TabIndex = 3;
-            this.PerfLabel3.Text = "Total Time:";
-            this.toolTips.SetToolTip(this.PerfLabel3, "Total Encode/Decode Time");
-            // 
-            // PerfLabel1
-            // 
-            this.PerfLabel1.AccessibleRole = System.Windows.Forms.AccessibleRole.None;
-            this.PerfLabel1.AutoSize = true;
-            this.PerfLabel1.Location = new System.Drawing.Point(7, 27);
-            this.PerfLabel1.Name = "PerfLabel1";
-            this.PerfLabel1.Size = new System.Drawing.Size(91, 14);
-            this.PerfLabel1.TabIndex = 1;
-            this.PerfLabel1.Text = "Output Size:";
-            this.toolTips.SetToolTip(this.PerfLabel1, "Output size in bytes");
-            // 
-            // PerfLebel0
-            // 
-            this.PerfLebel0.AccessibleRole = System.Windows.Forms.AccessibleRole.None;
-            this.PerfLebel0.AutoSize = true;
-            this.PerfLebel0.CausesValidation = false;
-            this.PerfLebel0.Location = new System.Drawing.Point(14, 13);
-            this.PerfLebel0.Name = "PerfLebel0";
-            this.PerfLebel0.Size = new System.Drawing.Size(84, 14);
-            this.PerfLebel0.TabIndex = 0;
-            this.PerfLebel0.Text = "Input Size:";
-            this.toolTips.SetToolTip(this.PerfLebel0, "Input size in bytes.");
             // 
             // InputLabel
             // 
@@ -154,65 +114,6 @@ namespace RDRE.GUI {
             this.RandDepthLabel.Text = "RandomPool Depth:";
             this.toolTips.SetToolTip(this.RandDepthLabel, "RandomPool Depth for Encoding");
             // 
-            // StatsGroup
-            // 
-            this.StatsGroup.Controls.Add(this.Progress);
-            this.StatsGroup.Controls.Add(this.PerfInputLen);
-            this.StatsGroup.Controls.Add(this.PerfTotalTime);
-            this.StatsGroup.Controls.Add(this.PerfOutputLen);
-            this.StatsGroup.Controls.Add(this.PerfLabel3);
-            this.StatsGroup.Controls.Add(this.PerfLabel1);
-            this.StatsGroup.Controls.Add(this.PerfLebel0);
-            this.StatsGroup.Location = new System.Drawing.Point(5, 458);
-            this.StatsGroup.Name = "StatsGroup";
-            this.StatsGroup.Size = new System.Drawing.Size(216, 71);
-            this.StatsGroup.TabIndex = 22;
-            this.StatsGroup.TabStop = false;
-            this.StatsGroup.Text = "Stats";
-            this.toolTips.SetToolTip(this.StatsGroup, "Displays various statistics.");
-            this.StatsGroup.Enter += new System.EventHandler(this.StatsGroup_Enter);
-            // 
-            // Progress
-            // 
-            this.Progress.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.Progress.Location = new System.Drawing.Point(6, 55);
-            this.Progress.MarqueeAnimationSpeed = 50;
-            this.Progress.Maximum = 1000;
-            this.Progress.Name = "Progress";
-            this.Progress.Size = new System.Drawing.Size(204, 10);
-            this.Progress.Step = 1;
-            this.Progress.Style = System.Windows.Forms.ProgressBarStyle.Continuous;
-            this.Progress.TabIndex = 22;
-            this.toolTips.SetToolTip(this.Progress, "Encode/Decode Progress");
-            // 
-            // PerfInputLen
-            // 
-            this.PerfInputLen.AutoSize = true;
-            this.PerfInputLen.Location = new System.Drawing.Point(99, 13);
-            this.PerfInputLen.Name = "PerfInputLen";
-            this.PerfInputLen.Size = new System.Drawing.Size(56, 14);
-            this.PerfInputLen.TabIndex = 8;
-            this.PerfInputLen.Text = "0 Bytes";
-            // 
-            // PerfTotalTime
-            // 
-            this.PerfTotalTime.AutoSize = true;
-            this.PerfTotalTime.Location = new System.Drawing.Point(99, 41);
-            this.PerfTotalTime.Name = "PerfTotalTime";
-            this.PerfTotalTime.Size = new System.Drawing.Size(70, 14);
-            this.PerfTotalTime.TabIndex = 7;
-            this.PerfTotalTime.Text = "0.0000 nS";
-            // 
-            // PerfOutputLen
-            // 
-            this.PerfOutputLen.AutoSize = true;
-            this.PerfOutputLen.Location = new System.Drawing.Point(99, 27);
-            this.PerfOutputLen.Name = "PerfOutputLen";
-            this.PerfOutputLen.Size = new System.Drawing.Size(56, 14);
-            this.PerfOutputLen.TabIndex = 5;
-            this.PerfOutputLen.Text = "0 Bytes";
-            // 
             // Input
             // 
             this.Input.AcceptsReturn = true;
@@ -233,7 +134,6 @@ namespace RDRE.GUI {
             // 
             this.SettingsGroup.Controls.Add(this.OptClearOnRet);
             this.SettingsGroup.Controls.Add(this.OptOutBase64);
-            this.SettingsGroup.Controls.Add(this.OptOutLZMA);
             this.SettingsGroup.Controls.Add(this.ModeDecRDR);
             this.SettingsGroup.Controls.Add(this.ModeEncRDR);
             this.SettingsGroup.Controls.Add(this.label2);
@@ -250,7 +150,7 @@ namespace RDRE.GUI {
             this.SettingsGroup.Controls.Add(this.RandDepthLabel);
             this.SettingsGroup.Controls.Add(this.OptDepthSelect);
             this.SettingsGroup.Controls.Add(this.OptAutoDepth);
-            this.SettingsGroup.Location = new System.Drawing.Point(5, 3);
+            this.SettingsGroup.Location = new System.Drawing.Point(4, 3);
             this.SettingsGroup.Name = "SettingsGroup";
             this.SettingsGroup.Size = new System.Drawing.Size(216, 315);
             this.SettingsGroup.TabIndex = 17;
@@ -273,25 +173,13 @@ namespace RDRE.GUI {
             // OptOutBase64
             // 
             this.OptOutBase64.AutoSize = true;
-            this.OptOutBase64.Location = new System.Drawing.Point(131, 109);
+            this.OptOutBase64.Location = new System.Drawing.Point(131, 116);
             this.OptOutBase64.Name = "OptOutBase64";
             this.OptOutBase64.Size = new System.Drawing.Size(68, 18);
             this.OptOutBase64.TabIndex = 24;
             this.OptOutBase64.Text = "Base64";
             this.OptOutBase64.UseVisualStyleBackColor = true;
             this.OptOutBase64.CheckedChanged += new System.EventHandler(this.OutBase64_CheckedChanged);
-            // 
-            // OptOutLZMA
-            // 
-            this.OptOutLZMA.AutoSize = true;
-            this.OptOutLZMA.Enabled = false;
-            this.OptOutLZMA.Location = new System.Drawing.Point(131, 130);
-            this.OptOutLZMA.Name = "OptOutLZMA";
-            this.OptOutLZMA.Size = new System.Drawing.Size(54, 18);
-            this.OptOutLZMA.TabIndex = 23;
-            this.OptOutLZMA.Text = "LZMA";
-            this.OptOutLZMA.UseVisualStyleBackColor = true;
-            this.OptOutLZMA.CheckedChanged += new System.EventHandler(this.OutLZMA_CheckedChanged);
             // 
             // ModeDecRDR
             // 
@@ -460,7 +348,7 @@ namespace RDRE.GUI {
             // 
             // OptSpacing
             // 
-            this.OptSpacing.Location = new System.Drawing.Point(131, 151);
+            this.OptSpacing.Location = new System.Drawing.Point(131, 140);
             this.OptSpacing.Name = "OptSpacing";
             this.OptSpacing.Size = new System.Drawing.Size(75, 18);
             this.OptSpacing.TabIndex = 8;
@@ -519,6 +407,27 @@ namespace RDRE.GUI {
             this.OptAutoDepth.UseVisualStyleBackColor = true;
             this.OptAutoDepth.CheckStateChanged += new System.EventHandler(this.OptAutoDepth_CheckStateChanged);
             // 
+            // StatsGroup
+            // 
+            this.StatsGroup.Controls.Add(this.pictureBox1);
+            this.StatsGroup.Location = new System.Drawing.Point(4, 432);
+            this.StatsGroup.Name = "StatsGroup";
+            this.StatsGroup.Size = new System.Drawing.Size(216, 226);
+            this.StatsGroup.TabIndex = 22;
+            this.StatsGroup.TabStop = false;
+            this.StatsGroup.Text = "QR Code";
+            this.toolTips.SetToolTip(this.StatsGroup, "Displays various statistics.");
+            this.StatsGroup.Enter += new System.EventHandler(this.StatsGroup_Enter);
+            // 
+            // pictureBox1
+            // 
+            this.pictureBox1.Location = new System.Drawing.Point(8, 16);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(200, 200);
+            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pictureBox1.TabIndex = 0;
+            this.pictureBox1.TabStop = false;
+            // 
             // Output
             // 
             this.Output.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
@@ -528,7 +437,7 @@ namespace RDRE.GUI {
             this.Output.Name = "Output";
             this.Output.ReadOnly = true;
             this.Output.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.ForcedVertical;
-            this.Output.Size = new System.Drawing.Size(549, 266);
+            this.Output.Size = new System.Drawing.Size(549, 393);
             this.Output.TabIndex = 24;
             this.Output.Text = "";
             // 
@@ -541,9 +450,9 @@ namespace RDRE.GUI {
             this.groupBox1.Controls.Add(this.DlgCharMap);
             this.groupBox1.Controls.Add(this.ClearAll);
             this.groupBox1.Controls.Add(this.CpyOutIn);
-            this.groupBox1.Location = new System.Drawing.Point(5, 324);
+            this.groupBox1.Location = new System.Drawing.Point(4, 324);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(216, 128);
+            this.groupBox1.Size = new System.Drawing.Size(216, 102);
             this.groupBox1.TabIndex = 25;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Actions";
@@ -551,7 +460,7 @@ namespace RDRE.GUI {
             // button3
             // 
             this.button3.Enabled = false;
-            this.button3.Location = new System.Drawing.Point(6, 21);
+            this.button3.Location = new System.Drawing.Point(12, 16);
             this.button3.Name = "button3";
             this.button3.Size = new System.Drawing.Size(64, 23);
             this.button3.TabIndex = 8;
@@ -561,7 +470,7 @@ namespace RDRE.GUI {
             // ClearOut
             // 
             this.ClearOut.Enabled = false;
-            this.ClearOut.Location = new System.Drawing.Point(6, 46);
+            this.ClearOut.Location = new System.Drawing.Point(12, 41);
             this.ClearOut.Name = "ClearOut";
             this.ClearOut.Size = new System.Drawing.Size(64, 23);
             this.ClearOut.TabIndex = 5;
@@ -571,7 +480,7 @@ namespace RDRE.GUI {
             // DlgNetRDR
             // 
             this.DlgNetRDR.Enabled = false;
-            this.DlgNetRDR.Location = new System.Drawing.Point(71, 46);
+            this.DlgNetRDR.Location = new System.Drawing.Point(77, 41);
             this.DlgNetRDR.Name = "DlgNetRDR";
             this.DlgNetRDR.Size = new System.Drawing.Size(64, 23);
             this.DlgNetRDR.TabIndex = 4;
@@ -580,7 +489,7 @@ namespace RDRE.GUI {
             // 
             // CpyOut
             // 
-            this.CpyOut.Location = new System.Drawing.Point(136, 46);
+            this.CpyOut.Location = new System.Drawing.Point(142, 41);
             this.CpyOut.Name = "CpyOut";
             this.CpyOut.Size = new System.Drawing.Size(64, 23);
             this.CpyOut.TabIndex = 3;
@@ -591,7 +500,7 @@ namespace RDRE.GUI {
             // DlgCharMap
             // 
             this.DlgCharMap.Enabled = false;
-            this.DlgCharMap.Location = new System.Drawing.Point(71, 21);
+            this.DlgCharMap.Location = new System.Drawing.Point(77, 16);
             this.DlgCharMap.Name = "DlgCharMap";
             this.DlgCharMap.Size = new System.Drawing.Size(64, 23);
             this.DlgCharMap.TabIndex = 2;
@@ -600,7 +509,7 @@ namespace RDRE.GUI {
             // 
             // ClearAll
             // 
-            this.ClearAll.Location = new System.Drawing.Point(136, 71);
+            this.ClearAll.Location = new System.Drawing.Point(142, 66);
             this.ClearAll.Name = "ClearAll";
             this.ClearAll.Size = new System.Drawing.Size(64, 23);
             this.ClearAll.TabIndex = 1;
@@ -610,7 +519,7 @@ namespace RDRE.GUI {
             // 
             // CpyOutIn
             // 
-            this.CpyOutIn.Location = new System.Drawing.Point(136, 21);
+            this.CpyOutIn.Location = new System.Drawing.Point(142, 16);
             this.CpyOutIn.Name = "CpyOutIn";
             this.CpyOutIn.Size = new System.Drawing.Size(64, 23);
             this.CpyOutIn.TabIndex = 0;
@@ -622,7 +531,7 @@ namespace RDRE.GUI {
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 14F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(782, 534);
+            this.ClientSize = new System.Drawing.Size(782, 661);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.Output);
             this.Controls.Add(this.OutputLabel);
@@ -636,8 +545,6 @@ namespace RDRE.GUI {
             this.Text = "RDRE Encoder v3 Alpha";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Main_FormClosing);
             this.Load += new System.EventHandler(this.Main_Load);
-            this.StatsGroup.ResumeLayout(false);
-            this.StatsGroup.PerformLayout();
             this.SettingsGroup.ResumeLayout(false);
             this.SettingsGroup.PerformLayout();
             this.panel2.ResumeLayout(false);
@@ -645,6 +552,8 @@ namespace RDRE.GUI {
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.InsaneDelayTicker)).EndInit();
+            this.StatsGroup.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.groupBox1.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -652,8 +561,6 @@ namespace RDRE.GUI {
         }
 
         #endregion
-
-        private System.Windows.Forms.GroupBox StatsGroup;
         private System.Windows.Forms.GroupBox SettingsGroup;
         private System.Windows.Forms.CheckBox OptSpacing;
         private System.Windows.Forms.RadioButton OptOutputHex;
@@ -662,14 +569,8 @@ namespace RDRE.GUI {
         private System.Windows.Forms.CheckBox OptAutoDepth;
         private System.Windows.Forms.CheckBox OptInsane;
         private System.Windows.Forms.ToolTip toolTips;
-        private System.Windows.Forms.Label PerfLabel3;
-        private System.Windows.Forms.Label PerfLabel1;
-        private System.Windows.Forms.Label PerfLebel0;
         private System.Windows.Forms.Label OutputModeLabel;
         private System.Windows.Forms.Label RandDepthLabel;
-        private System.Windows.Forms.Label PerfTotalTime;
-        private System.Windows.Forms.Label PerfOutputLen;
-        private System.Windows.Forms.Label PerfInputLen;
         private System.Windows.Forms.NumericUpDown InsaneDelayTicker;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.RichTextBox Output;
@@ -694,10 +595,10 @@ namespace RDRE.GUI {
         private Button CpyOut;
         private Button button3;
         private CheckBox OptOutBase64;
-        private CheckBox OptOutLZMA;
         private CheckBox OptRealtime;
         private CheckBox OptClearOnRet;
-        private ProgressBar Progress;
+        private GroupBox StatsGroup;
+        private PictureBox pictureBox1;
     }
 }
 
