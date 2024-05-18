@@ -1,7 +1,7 @@
 ﻿using System.Drawing.Drawing2D;
 using System.Windows.Forms;
 
-public class PictureBoxWithInterpolationMode : PictureBox
+/*public class PictureBoxWithInterpolationMode : PictureBox
 {
     public InterpolationMode InterpolationMode { get; set; }
 
@@ -10,8 +10,9 @@ public class PictureBoxWithInterpolationMode : PictureBox
         paintEventArgs.Graphics.InterpolationMode = InterpolationMode;
         base.OnPaint(paintEventArgs);
     }
-}
 
+}
+*/
 namespace RDRE.GUI {
     partial class Main {
         /// <summary>
@@ -66,8 +67,8 @@ namespace RDRE.GUI {
             this.OptDepthSelect = new System.Windows.Forms.ComboBox();
             this.OptAutoDepth = new System.Windows.Forms.CheckBox();
             this.toolTips = new System.Windows.Forms.ToolTip(this.components);
-            this.StatsGroup = new System.Windows.Forms.GroupBox();
-            this.pictureBox1 = new PictureBoxWithInterpolationMode();
+            //this.StatsGroup = new System.Windows.Forms.GroupBox();
+            //this.pictureBox1 = new PictureBoxWithInterpolationMode();
             this.Output = new System.Windows.Forms.RichTextBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.button3 = new System.Windows.Forms.Button();
@@ -81,9 +82,9 @@ namespace RDRE.GUI {
             this.panel2.SuspendLayout();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.InsaneDelayTicker)).BeginInit();
-            this.StatsGroup.SuspendLayout();
+/*            this.StatsGroup.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
-            this.groupBox1.SuspendLayout();
+*/            this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
             // OutputLabel
@@ -421,7 +422,7 @@ namespace RDRE.GUI {
             // 
             // StatsGroup
             // 
-            this.StatsGroup.Controls.Add(this.pictureBox1);
+/*            this.StatsGroup.Controls.Add(this.pictureBox1);
             this.StatsGroup.Location = new System.Drawing.Point(4, 432);
             this.StatsGroup.Name = "StatsGroup";
             this.StatsGroup.Size = new System.Drawing.Size(216, 226);
@@ -440,7 +441,7 @@ namespace RDRE.GUI {
             this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pictureBox1.TabIndex = 0;
             this.pictureBox1.TabStop = false;
-            // 
+*/            // 
             // Output
             // 
             this.Output.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
@@ -548,7 +549,7 @@ namespace RDRE.GUI {
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.Output);
             this.Controls.Add(this.OutputLabel);
-            this.Controls.Add(this.StatsGroup);
+            //this.Controls.Add(this.StatsGroup);
             this.Controls.Add(this.InputLabel);
             this.Controls.Add(this.Input);
             this.Controls.Add(this.SettingsGroup);
@@ -565,8 +566,8 @@ namespace RDRE.GUI {
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.InsaneDelayTicker)).EndInit();
-            this.StatsGroup.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
+            //this.StatsGroup.ResumeLayout(false);
+            //((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.groupBox1.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -610,8 +611,8 @@ namespace RDRE.GUI {
         private CheckBox OptOutBase64;
         private CheckBox OptRealtime;
         private CheckBox OptClearOnRet;
-        private GroupBox StatsGroup;
-        private PictureBoxWithInterpolationMode pictureBox1;
+        //private GroupBox StatsGroup;
+        //private PictureBoxWithInterpolationMode pictureBox1;
     }
 }
 

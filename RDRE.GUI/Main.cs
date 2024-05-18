@@ -16,7 +16,7 @@ using System.IO;
 using System.Security.Cryptography;
 using System.IO.Compression;
 using System.Reflection;
-using QRCoder;
+//using QRCoder;
 using System.Drawing.Drawing2D;
 
 namespace RDRE.GUI {
@@ -24,10 +24,10 @@ namespace RDRE.GUI {
         [DllImport("user32.dll", CharSet = CharSet.Auto)]
         private static extern Int32 SendMessage(IntPtr hWnd, int msg, int wParam, [MarshalAs(UnmanagedType.LPWStr)]string lParam);
         private const int EM_SETCUEBANNER = 0x1501;
-        QRCodeGenerator qrGenerator;
-        QRCodeGenerator.ECCLevel eccLevel;
-        QRCodeData qrCodeData;
-        QRCode qrCode;
+        //QRCodeGenerator qrGenerator;
+        //QRCodeGenerator.ECCLevel eccLevel;
+        //QRCodeData qrCodeData;
+        //QRCode qrCode;
         bool AutoDepth;
         int OutputMode;
         bool Spacing;
@@ -53,8 +53,8 @@ namespace RDRE.GUI {
         bool ClearOnRetLast;
         //public double ProgressRDR;
         public Main() {
-            eccLevel = (QRCodeGenerator.ECCLevel)1;
-            qrGenerator = new QRCodeGenerator();
+            //eccLevel = (QRCodeGenerator.ECCLevel)1;
+            //qrGenerator = new QRCodeGenerator();
             InitializeComponent();
             RDRE.Init();
             UpdateStates();
@@ -150,13 +150,13 @@ namespace RDRE.GUI {
 
                     Output.Text = Text;
                 }
-                qrCodeData = qrGenerator.CreateQrCode(Text, eccLevel);
-                qrCode = new QRCode(qrCodeData);
+                //qrCodeData = qrGenerator.CreateQrCode(Text, eccLevel);
+                //qrCode = new QRCode(qrCodeData);
                 
                 //pictureBox1.SizeMode = PictureBoxSizeMode.CenterImage;
                 //pictureBox1.SizeMode = PictureBoxSizeMode.StretchImage;
                 
-                pictureBox1.Image = qrCode.GetGraphic(8, Color.Black, Color.White, true);
+                //pictureBox1.Image = qrCode.GetGraphic(8, Color.Black, Color.White, true);
                 //pictureBox1.Size = new System.Drawing.Size(pictureBox1.Width, pictureBox1.Height);
 
                 //stopWatch.Stop();
@@ -184,8 +184,8 @@ namespace RDRE.GUI {
             else if (Text.Length == 0) {
                 Output.Text = "";
                 Output.Text = Output.Text;
-                pictureBox1.Image = null;
-                pictureBox1.Update();
+                //pictureBox1.Image = null;
+                //pictureBox1.Update();
             }
             
         }
